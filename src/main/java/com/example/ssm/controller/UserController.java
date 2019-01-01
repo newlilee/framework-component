@@ -1,10 +1,11 @@
 package com.example.ssm.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import com.example.ssm.model.UserModel;
 import com.example.ssm.service.UserService;
 import com.example.ssm.vo.UserVO;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
 
 /**
  * @author clx 2018/9/15
@@ -30,6 +31,9 @@ public class UserController {
 			throw new IllegalArgumentException("param error.");
 		}
 		UserModel user = userService.getUserById(id);
+		if (user == null) {
+			throw new IllegalStateException("User not exist.");
+		}
 		UserVO userVO = new UserVO();
 		userVO.setName(user.getName());
 		userVO.setAge(user.getAge());
