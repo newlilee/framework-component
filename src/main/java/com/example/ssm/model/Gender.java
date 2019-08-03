@@ -2,18 +2,18 @@ package com.example.ssm.model;
 
 /**
  * gender
- * 
+ *
  * @author clx
  */
 public enum Gender {
 	/**
 	 * male
 	 */
-	male(1),
+	MALE(1),
 	/**
 	 * female
 	 */
-	female(2);
+	FEMALE(2);
 
 	final int gender;
 
