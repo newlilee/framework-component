@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+    <bean id="simpleThreadScope" class="org.springframework.context.support.SimpleThreadScope"/>
+    <bean class="org.springframework.beans.factory.config.CustomScopeConfigurer">
+        <property name="scopes">
+            <map>
+                <entry key="thread" value-ref="simpleThreadScope"/>
+            </map>
+        </property>
+    </bean>
+
+    <bean id="helloCustomScope" class="com.example.ssm.spring.bean.scope.CustomScopeImpl" scope="session">
+        <aop:scoped-proxy/>
+    </bean>
+
+</beans>

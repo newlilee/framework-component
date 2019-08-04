@@ -1,31 +1,32 @@
-package com.example.ssm.dao.test;
+package com.example.ssm.dao;
 
-import com.example.ssm.dao.UserDao;
-import com.example.ssm.model.Gender;
-import com.example.ssm.model.UserModel;
+import java.io.Reader;
+import java.util.Map;
+
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.io.Reader;
-import java.util.Map;
+import com.example.ssm.model.Gender;
+import com.example.ssm.model.UserModel;
 
 /**
  * @author clx at 2016年3月22日 下午4:15:35
  */
 public class UserTest {
 
+	private static final Logger logger = LoggerFactory.getLogger(UserTest.class);
 	private static SqlSessionFactory sqlSessionFactory;
-	private static Reader reader;
 
 	static {
-		try {
-			reader = Resources.getResourceAsReader("org.example.mybatis/mybatis/mybatis-config.xml");
+		try (Reader reader = Resources.getResourceAsReader("com.example.mybatis/mybatis/mybatis-config.xml")) {
 			sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-		} catch (Exception ex) {
-			ex.printStackTrace();
+		} catch (Exception e) {
+			logger.error("init failed.", e);
 		}
 	}
 
@@ -35,8 +36,7 @@ public class UserTest {
 
 	@Test
 	public void insertTest() {
-		SqlSession session = sqlSessionFactory.openSession();
-		try {
+		try (SqlSession session = sqlSessionFactory.openSession()) {
 			UserDao dao = session.getMapper(UserDao.class);
 			UserModel user = new UserModel();
 			user.setId(1);
@@ -47,39 +47,36 @@ public class UserTest {
 			user.setAddress("I'm living in earth~");
 			dao.save(user);
 			session.commit();
-		} finally {
-			session.close();
+		} catch (Exception e) {
+			logger.error("insert err.", e);
 		}
 	}
 
 	@Test
 	public void getOneTest() {
-		SqlSession session = sqlSessionFactory.openSession();
-		try {
+		try (SqlSession session = sqlSessionFactory.openSession()) {
 			UserDao dao = session.getMapper(UserDao.class);
 			UserModel user = dao.queryById(1);
 			System.out.println(user);
-		} finally {
-			session.close();
+		} catch (Exception e) {
+			logger.error("query err.", e);
 		}
 	}
 
 	@Test
 	public void deleteById() {
-		SqlSession session = sqlSessionFactory.openSession();
-		try {
+		try (SqlSession session = sqlSessionFactory.openSession()) {
 			UserDao dao = session.getMapper(UserDao.class);
 			dao.deleteById(0);
 			session.commit();
-		} finally {
-			session.close();
+		} catch (Exception e) {
+			logger.error("delete err.", e);
 		}
 	}
 
 	@Test
 	public void updateTest() {
-		SqlSession session = sqlSessionFactory.openSession();
-		try {
+		try (SqlSession session = sqlSessionFactory.openSession()) {
 			UserDao dao = session.getMapper(UserDao.class);
 			UserModel user = new UserModel();
 			user.setId(1);
@@ -90,20 +87,19 @@ public class UserTest {
 			user.setAddress("I'm living in earth~");
 			dao.updateUser(user);
 			session.commit();
-		} finally {
-			session.close();
+		} catch (Exception e) {
+			logger.error("update err.", e);
 		}
 	}
 
 	@Test
 	public void getByIdTest() {
-		SqlSession session = sqlSessionFactory.openSession();
-		try {
+		try (SqlSession session = sqlSessionFactory.openSession()) {
 			UserDao mapper = session.getMapper(UserDao.class);
 			Map<Integer, UserModel> userMap = mapper.getById(1);
 			System.out.println(userMap);
-		} finally {
-			session.close();
+		} catch (Exception e) {
+			logger.error("query err.", e);
 		}
 	}
 }

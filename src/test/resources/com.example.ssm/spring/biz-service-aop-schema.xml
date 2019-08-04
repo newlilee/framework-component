@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
+
+    <!-- target class -->
+    <bean id="helloWorld" class="com.example.ssm.spring.aop.impl.HelloWorldServiceImpl"/>
+
+    <!-- 切面支持类 -->
+    <bean id="aspect" class="com.example.ssm.spring.aop.advice.HelloWorldAdvice"/>
+    <!-- aop config -->
+    <aop:config>
+        <!-- 切点 -->
+        <aop:pointcut expression="execution(* com.example.ssm.spring.aop..*.*(..))"
+                      id="pointcut"/>
+        <!-- 切面 -->
+        <aop:aspect ref="aspect">
+            <!-- 通知 -->
+            <aop:before pointcut-ref="pointcut" method="beforeAdvice"/>
+            <!-- 匿名切入点 -->
+            <aop:after pointcut="execution(* com.example.ssm.spring.aop..*.*(..))"
+                       method="afterFinalAdvice"/>
+        </aop:aspect>
+
+        <aop:aspect ref="aspect">
+            <aop:around pointcut="execution(* com.example.ssm.spring.aop..*.*(..))"
+                        method="aroundAdvice"/>
+        </aop:aspect>
+    </aop:config>
+</beans>
