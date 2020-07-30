@@ -1,1 +1,1 @@
-# ssm-example
+# framework & component
