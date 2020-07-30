@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+    <!-- 构造方法-->
+    <!--<bean id="helloWorld" class="org.example.spring.service.impl.HelloWorldImplSecond">-->
+    <!--&lt;!&ndash;<constructor-arg index="0" value="Hello, message!"/>&ndash;&gt;-->
+    <!--</bean>-->
+
+    <!-- 静态工厂方法init bean -->
+    <!--<bean id="helloWorld" class="org.example.spring.service.impl.HelloWorldImplFactory"-->
+    <!--factory-method="getInstance">-->
+    <!--<constructor-arg index="0" value="Hello,FactoryBean"/>-->
+    <!--</bean>-->
+
+    <!-- 实例工厂方法init bean -->
+    <bean id="beanFactory" class="org.example.spring.service.impl.HelloWorldImplFactory"/>
+    <bean id="helloWorld" factory-bean="beanFactory" factory-method="newInstance">
+        <constructor-arg index="0" value="hello,Instance"/>
+    </bean>
+</beans>

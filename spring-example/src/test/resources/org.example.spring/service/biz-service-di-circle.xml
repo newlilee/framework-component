@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.2.xsd 
+           http://www.springframework.org/schema/util 
+           http://www.springframework.org/schema/util/spring-util-3.2.xsd">
+	<!-- <context:component-scan base-package="com.spring.basic.org.example.spring.service.impl"
+		/> -->
+	<!-- circle DI constructor-->
+	<bean id="circlefirst" class="org.example.spring.di.circle.CircleFirst">
+		<constructor-arg index="0" ref="circlesecond"/>
+	</bean>
+	<bean id="circlesecond" class="org.example.spring.di.circle.CircleSecond">
+		<constructor-arg index="0" ref="circlethree"/>
+	</bean>
+	<bean id="circlethree" class="org.example.spring.di.circle.CircleThree">
+		<constructor-arg index="0" ref="circlefirst"/>
+	</bean>
+	
+	<!-- circle DI setter-->
+	<bean id="circlefirst" class="org.example.spring.di.circle.CircleFirst">
+		<property name="cs" ref="circlesecond"/>
+	</bean>
+	<bean id="circlesecond" class="org.example.spring.di.circle.CircleSecond">
+		<property name="ct" ref="circlethree"/>
+	</bean>
+	<bean id="circlethree" class="org.example.spring.di.circle.CircleThree">
+		<property name="cf" ref="circlefirst"/>
+	</bean>
+</beans>

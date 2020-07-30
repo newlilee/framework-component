@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+    <!-- lookup method inject -->
+    <bean id="prototype-printer" class="org.example.spring.service.impl.method.inject.Printer"
+          scope="prototype"/>
+    <bean id="singleton-printer" class="org.example.spring.service.impl.method.inject.Printer"
+          scope="singleton"/>
+
+    <bean id="prototype-hello"
+          class="org.example.spring.service.impl.method.inject.MethodInjectImpl"
+          scope="prototype">
+        <property name="printer" ref="prototype-printer"/>
+        <lookup-method name="createPrototypePrinter" bean="prototype-printer"/>
+        <lookup-method name="createSingletonPrinter" bean="singleton-printer"/>
+    </bean>
+
+    <bean id="singleton-hello"
+          class="org.example.spring.service.impl.method.inject.MethodInjectImpl"
+          scope="singleton">
+        <property name="printer" ref="prototype-printer"/>
+        <lookup-method name="createPrototypePrinter" bean="prototype-printer"/>
+        <lookup-method name="createSingletonPrinter" bean="singleton-printer"/>
+    </bean>
+
+    <!-- replacer method inject -->
+    <bean id="replacerBean" class="org.example.spring.service.impl.method.inject.ReplacerPrinter"/>
+    <bean id="printer" class="org.example.spring.service.impl.method.inject.Printer">
+        <replaced-method name="print" replacer="replacerBean">
+            <arg-type>java.lang.String</arg-type>
+        </replaced-method>
+    </bean>
+</beans>

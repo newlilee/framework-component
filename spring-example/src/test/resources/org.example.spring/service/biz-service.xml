@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.3.xsd">
+
+    <!-- <context:component-scan base-package="com.spring.basic.org.example.spring.service.impl" /> -->
+    <bean id="helloWorld" class="org.example.spring.service.impl.HelloWorldImpl"/>
+    <!-- <bean class="HelloWorldImpl"/> -->
+    <!-- <bean name="helloWorld" class="HelloWorldImpl"/> -->
+    <!-- id name 若一致IOC容器会消除冲突;id name 共存，id是xml中存在的属性，可以更早的发现引用的id是否存在 -->
+    <!-- <bean id="helloWorld" class="HelloWorldImpl"/>
+    <alias name="helloWorld" alias="alias1"/>
+    <alias name="helloWorld" alias="alias2"/> -->
+
+    <!-- constructor init -->
+    <!--<bean name="hello" class="org.example.spring.org.example.spring.service.impl.HelloWorldImplSecond"/>-->
+    <!--<bean name="helloCon" class="org.example.spring.org.example.spring.service.impl.HelloWorldImplSecond">-->
+    <!--<constructor-arg index="0" value="Hello World Constructor"/>-->
+    <!--</bean>-->
+</beans>

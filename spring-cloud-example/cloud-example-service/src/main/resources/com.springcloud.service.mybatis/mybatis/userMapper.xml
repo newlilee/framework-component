@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC 
+	"-//mybatis.org//DTD Mapper 3.0//EN" 
+	" http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.springcloud.example.service.dao.UserMapper">
+
+	<resultMap type="com.springcloud.example.service.entity.UserEntity" id="userMap">
+		<result column="id" property="id" />
+		<result column="name" property="name" />
+		<result column="age" property="age" />
+		<result column="gender" property="genderBy" />
+		<result column="birthday" property="birthday" />
+		<result column="address" property="address" />
+	</resultMap>
+
+	<sql id="template">
+		id,
+		name,
+		age,
+		gender,
+		birthday,
+		address
+	</sql>
+
+	<sql id="where_template">
+		<where>
+
+		</where>
+	</sql>
+
+	<insert id="save" parameterType="com.springcloud.example.service.entity.UserEntity">
+		INSERT INTO `user`(
+		<include refid="template" />
+		)VALUES(
+		#{id},
+		#{name},
+		#{age},
+		#{genderBy},
+		#{birthday},
+		#{address}
+		)
+	</insert>
+
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		DELETE FROM `user`
+		WHERE id
+		= #{id}
+	</delete>
+
+	<update id="updateUser" parameterType="com.springcloud.example.service.entity.UserEntity">
+		UPDATE `user`
+		SET
+		name = #{name},
+		age = #{age},
+		gender = #{genderBy},
+		birthday =
+		#{birthday},
+		address = #{address}
+		WHERE
+		id = #{id}
+	</update>
+
+	<select id="queryById" parameterType="java.lang.Integer"
+		resultMap="userMap">
+		SELECT
+		<include refid="template" />
+		FROM `user`
+		WHERE id = #{id}
+	</select>
+
+	<select id="queryAll" resultMap="userMap">
+		SELECT
+		<include refid="template" />
+		FROM `user`
+		ORDER BY id DESC
+	</select>
+
+	<select id="getById" parameterType="java.lang.Integer"
+		resultMap="userMap">
+		SELECT
+		<include refid="template" />
+		FROM `user`
+		WHERE id = #{id}
+	</select>
+</mapper>
