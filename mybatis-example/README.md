@@ -1,2 +1,0 @@
-# mybatis-example
-mybatis-example
