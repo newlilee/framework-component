@@ -1,9 +1,9 @@
 package com.example.graphql;
 
-import com.example.graphql.fetcher.GraphQLDataFetchers;
+import com.example.graphql.fetcher.GraphqlDataFetchers;
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
-import graphql.nextgen.GraphQL;
+import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.RuntimeWiring;
 import graphql.schema.idl.SchemaGenerator;
@@ -25,26 +25,36 @@ import static graphql.schema.idl.TypeRuntimeWiring.newTypeWiring;
  * @author clx
  */
 @Component
-public class GraphQLProvider {
+public class GraphqlProvider {
+
+	private GraphQL graphql;
+	private GraphqlDataFetchers graphqlDataFetchers;
 
 	@Autowired
-	private GraphQLDataFetchers graphQLDataFetchers;
+	public GraphqlProvider(GraphqlDataFetchers graphqlDataFetchers) {
+		this.graphqlDataFetchers = graphqlDataFetchers;
+	}
 
-	private GraphQL graphQL;
 
 	@PostConstruct
 	public void init() throws IOException {
-		URL url = Resources.getResource("schema.graphqls");
+		URL url = Resources.getResource("schema.graphql");
 		String sdl = Resources.toString(url, Charsets.UTF_8);
 		GraphQLSchema graphQLSchema = this.buildSchema(sdl);
-		this.graphQL = GraphQL.newGraphQL(graphQLSchema).build();
+		this.graphql = GraphQL.newGraphQL(graphQLSchema).build();
 	}
 
 	@Bean
-	public GraphQL graphQL() {
-		return graphQL;
+	public GraphQL graphql() {
+		return graphql;
 	}
 
+	/**
+	 * build schema
+	 *
+	 * @param sdl
+	 * @return
+	 */
 	private GraphQLSchema buildSchema(String sdl) {
 		TypeDefinitionRegistry typeDefinitionRegistry = new SchemaParser().parse(sdl);
 		RuntimeWiring runtimeWiring = this.buildWiring();
@@ -52,9 +62,14 @@ public class GraphQLProvider {
 		return schemaGenerator.makeExecutableSchema(typeDefinitionRegistry, runtimeWiring);
 	}
 
+	/**
+	 * build wiring
+	 *
+	 * @return
+	 */
 	private RuntimeWiring buildWiring() {
 		return RuntimeWiring.newRuntimeWiring()
-				.type(newTypeWiring("Query").dataFetcher("bookById", graphQLDataFetchers.getBookByIdDataFetcher()))
-				.type(newTypeWiring("Book").dataFetcher("author", graphQLDataFetchers.getAuthorDataFetcher())).build();
+				.type(newTypeWiring("Query").dataFetcher("bookById", graphqlDataFetchers.getBookByIdDataFetcher()))
+				.type(newTypeWiring("Book").dataFetcher("author", graphqlDataFetchers.getAuthorDataFetcher())).build();
 	}
 }

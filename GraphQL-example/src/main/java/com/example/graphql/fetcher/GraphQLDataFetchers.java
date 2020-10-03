@@ -12,7 +12,30 @@ import java.util.Map;
  * @author clx
  */
 @Component
-public class GraphQLDataFetchers {
+public class GraphqlDataFetchers {
+
+	public DataFetcher getBookByIdDataFetcher() {
+		return dataFetchingEnvironment -> {
+			String bookId = dataFetchingEnvironment.getArgument("id");
+			return books
+					.stream()
+					.filter(book -> book.get("id").equals(bookId))
+					.findFirst()
+					.orElse(null);
+		};
+	}
+
+	public DataFetcher getAuthorDataFetcher() {
+		return dataFetchingEnvironment -> {
+			Map<String, String> book = dataFetchingEnvironment.getSource();
+			String authorId = book.get("authorId");
+			return authors
+					.stream()
+					.filter(author -> author.get("id").equals(authorId))
+					.findFirst()
+					.orElse(null);
+		};
+	}
 
 	private static List<Map<String, String>> books = Arrays.asList(
 			ImmutableMap.of("id", "book-1",
@@ -40,27 +63,4 @@ public class GraphQLDataFetchers {
 					"firstName", "Anne",
 					"lastName", "Rice")
 	);
-
-	public DataFetcher getBookByIdDataFetcher() {
-		return dataFetchingEnvironment -> {
-			String bookId = dataFetchingEnvironment.getArgument("id");
-			return books
-					.stream()
-					.filter(book -> book.get("id").equals(bookId))
-					.findFirst()
-					.orElse(null);
-		};
-	}
-
-	public DataFetcher getAuthorDataFetcher() {
-		return dataFetchingEnvironment -> {
-			Map<String, String> book = dataFetchingEnvironment.getSource();
-			String authorId = book.get("authorId");
-			return authors
-					.stream()
-					.filter(author -> author.get("id").equals(authorId))
-					.findFirst()
-					.orElse(null);
-		};
-	}
 }

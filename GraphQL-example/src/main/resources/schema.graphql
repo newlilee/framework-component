@@ -1,0 +1,45 @@
+"""query"""
+type Query {
+    bookById(id: ID): Book
+    articles: [Article!]!
+    article(id: Int): Article!
+}
+"""mutation"""
+type Mutation {
+    createArticle: Article!
+    updateArticle(id: Int!): Article!
+    deleteArticle(id: Int!): Article!
+}
+"""book"""
+type Book {
+    id: ID
+    name: String
+    pageCount: Int
+    author: Author
+}
+"""author"""
+type Author {
+    id: ID
+    firstName: String
+    lastName: String
+}
+
+"""article"""
+type Article {
+    id: ID!
+    text: String!
+    isPublished: Boolean!
+    author: User!
+    comments: [Comment!]
+}
+"""user"""
+type User {
+    id: ID!
+    name: String!
+}
+"""comment"""
+type Comment {
+    id: ID!
+    content: String!
+    author: User!
+}
