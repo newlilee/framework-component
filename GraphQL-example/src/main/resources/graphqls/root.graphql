@@ -1,0 +1,9 @@
+"""query"""
+type Query {
+    index: String!
+}
+
+"""mutation"""
+type Mutation {
+
+}

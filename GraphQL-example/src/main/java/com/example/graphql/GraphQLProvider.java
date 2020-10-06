@@ -1,21 +1,22 @@
 package com.example.graphql;
 
 import com.example.graphql.fetcher.GraphqlDataFetchers;
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
 import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
 import graphql.schema.idl.RuntimeWiring;
 import graphql.schema.idl.SchemaGenerator;
 import graphql.schema.idl.SchemaParser;
 import graphql.schema.idl.TypeDefinitionRegistry;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
-import java.net.URL;
 
 import static graphql.schema.idl.TypeRuntimeWiring.newTypeWiring;
 
@@ -27,20 +28,23 @@ import static graphql.schema.idl.TypeRuntimeWiring.newTypeWiring;
 @Component
 public class GraphqlProvider {
 
+	private final Logger logger = LoggerFactory.getLogger(GraphqlProvider.class);
+
 	private GraphQL graphql;
+	private ApplicationContext applicationContext;
 	private GraphqlDataFetchers graphqlDataFetchers;
 
 	@Autowired
-	public GraphqlProvider(GraphqlDataFetchers graphqlDataFetchers) {
+	public GraphqlProvider(ApplicationContext applicationContext, GraphqlDataFetchers graphqlDataFetchers) {
+		this.applicationContext = applicationContext;
 		this.graphqlDataFetchers = graphqlDataFetchers;
 	}
 
 
 	@PostConstruct
 	public void init() throws IOException {
-		URL url = Resources.getResource("schema.graphql");
-		String sdl = Resources.toString(url, Charsets.UTF_8);
-		GraphQLSchema graphQLSchema = this.buildSchema(sdl);
+		Resource[] resources = this.applicationContext.getResources("classpath*:graphqls/*.graphql");
+		GraphQLSchema graphQLSchema = this.buildSchema(resources);
 		this.graphql = GraphQL.newGraphQL(graphQLSchema).build();
 	}
 
@@ -52,11 +56,18 @@ public class GraphqlProvider {
 	/**
 	 * build schema
 	 *
-	 * @param sdl
+	 * @param resources
 	 * @return
 	 */
-	private GraphQLSchema buildSchema(String sdl) {
-		TypeDefinitionRegistry typeDefinitionRegistry = new SchemaParser().parse(sdl);
+	private GraphQLSchema buildSchema(Resource[] resources) {
+		TypeDefinitionRegistry typeDefinitionRegistry = new TypeDefinitionRegistry();
+		for (Resource resource : resources) {
+			try {
+				typeDefinitionRegistry.merge(new SchemaParser().parse(resource.getInputStream()));
+			} catch (Exception e) {
+				logger.error("read schema error:{}", e.getMessage());
+			}
+		}
 		RuntimeWiring runtimeWiring = this.buildWiring();
 		SchemaGenerator schemaGenerator = new SchemaGenerator();
 		return schemaGenerator.makeExecutableSchema(typeDefinitionRegistry, runtimeWiring);
@@ -70,6 +81,7 @@ public class GraphqlProvider {
 	private RuntimeWiring buildWiring() {
 		return RuntimeWiring.newRuntimeWiring()
 				.type(newTypeWiring("Query").dataFetcher("bookById", graphqlDataFetchers.getBookByIdDataFetcher()))
-				.type(newTypeWiring("Book").dataFetcher("author", graphqlDataFetchers.getAuthorDataFetcher())).build();
+				.type(newTypeWiring("Book").dataFetcher("author", graphqlDataFetchers.getAuthorDataFetcher()))
+				.build();
 	}
 }

@@ -1,11 +1,11 @@
-"""query"""
-type Query {
+# book store query
+extend type Query {
     bookById(id: ID): Book
     articles: [Article!]!
     article(id: Int): Article!
 }
-"""mutation"""
-type Mutation {
+# book store mutation
+extend type Mutation {
     createArticle: Article!
     updateArticle(id: Int!): Article!
     deleteArticle(id: Int!): Article!
