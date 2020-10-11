@@ -111,5 +111,4 @@ public class GraphqlController {
 				.append("timeElapsed=").append(System.currentTimeMillis() - currentTimeMillis);
 		return result;
 	}
-
 }

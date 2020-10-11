@@ -40,7 +40,6 @@ public class GraphqlProvider {
 		this.graphqlDataFetchers = graphqlDataFetchers;
 	}
 
-
 	@PostConstruct
 	public void init() throws IOException {
 		Resource[] resources = this.applicationContext.getResources("classpath*:graphqls/*.graphql");
