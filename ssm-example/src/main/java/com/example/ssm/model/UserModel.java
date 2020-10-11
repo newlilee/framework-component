@@ -1,19 +1,20 @@
 package com.example.ssm.model;
 
-import java.io.Serializable;
-
+import com.example.ssm.enums.GenderEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.io.Serializable;
+
 /**
  * UserModel
- * 
+ *
  * @author clx
  */
 public class UserModel implements Serializable {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	/**
@@ -28,7 +29,7 @@ public class UserModel implements Serializable {
 	 * gender
 	 */
 	@JsonIgnore
-	private Gender gender;
+	private GenderEnum gender;
 	/**
 	 * age
 	 */
@@ -63,13 +64,13 @@ public class UserModel implements Serializable {
 		return gender.getGender();
 	}
 
-	public void setGender(Gender gender) {
+	public void setGender(GenderEnum gender) {
 		this.gender = gender;
 	}
 
 	@JsonProperty("gender")
 	public void setGenderBy(int gender) {
-		this.gender = Gender.valueOf(gender);
+		this.gender = GenderEnum.valueOf(gender);
 	}
 
 	public int getAge() {

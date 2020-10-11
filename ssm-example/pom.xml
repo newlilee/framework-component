@@ -4,7 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example.ssm</groupId>
+    <groupId>com.example.ssm</groupId>
     <artifactId>ssm-example</artifactId>
     <version>0.01-SNAPSHOT</version>
     <name>ssm-example</name>
@@ -184,8 +184,6 @@
             <version>1.7.26</version>
             <scope>test</scope>
         </dependency>
-
-        <!-- https://mvnrepository.com/artifact/redis.clients/jedis -->
         <dependency>
             <groupId>redis.clients</groupId>
             <artifactId>jedis</artifactId>
@@ -240,32 +238,11 @@
                     <execution>
                         <id>attach-source</id>
                         <goals>
-                            <goal>jar</goal>
+                            <goal>jar-no-fork</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
-            <!--<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-assembly-plugin</artifactId>
-                <version>2.5.5</version>
-                <configuration>
-                    <finalName>${project.artifactId}-${project.version}</finalName>
-                    <appendAssemblyId>true</appendAssemblyId>
-                    <descriptors>
-                        <descriptor>src/main/assembly/assembly.xml</descriptor>
-                    </descriptors>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>make-assembly</id>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>single</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>-->
         </plugins>
     </build>
 

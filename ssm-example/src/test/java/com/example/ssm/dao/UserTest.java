@@ -11,7 +11,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.example.ssm.model.Gender;
+import com.example.ssm.enums.GenderEnum;
 import com.example.ssm.model.UserModel;
 
 /**
@@ -42,7 +42,7 @@ public class UserTest {
 			user.setId(1);
 			user.setName("Rose");
 			user.setAge(18);
-			user.setGender(Gender.FEMALE);
+			user.setGender(GenderEnum.FEMALE);
 			user.setBirthday(System.currentTimeMillis());
 			user.setAddress("I'm living in earth~");
 			dao.save(user);
@@ -82,7 +82,7 @@ public class UserTest {
 			user.setId(1);
 			user.setName("Jack");
 			user.setAge(18);
-			user.setGender(Gender.MALE);
+			user.setGender(GenderEnum.MALE);
 			user.setBirthday(System.currentTimeMillis());
 			user.setAddress("I'm living in earth~");
 			dao.updateUser(user);

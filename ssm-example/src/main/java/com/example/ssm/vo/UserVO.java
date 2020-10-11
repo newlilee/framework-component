@@ -1,8 +1,8 @@
 package com.example.ssm.vo;
 
-import java.io.Serializable;
-
 import com.example.ssm.model.UserModel;
+
+import java.io.Serializable;
 
 /**
  * @author clx 2018/9/15
@@ -80,11 +80,11 @@ public class UserVO implements Serializable {
 
 	/**
 	 * UserVO to UserModel
-	 * 
+	 *
 	 * @param user
 	 * @return
 	 */
-	public UserModel to(UserVO user) {
+	public UserModel voFormat(UserVO user) {
 		UserModel userModel = new UserModel();
 		userModel.setName(user.getName());
 		userModel.setAge(user.getAge());
@@ -92,5 +92,21 @@ public class UserVO implements Serializable {
 		userModel.setBirthday(user.getBirthday());
 		userModel.setAddress(user.getAddress());
 		return userModel;
+	}
+
+	/**
+	 * UserModel to UserVO
+	 *
+	 * @param user
+	 * @return
+	 */
+	public UserVO toVo(UserModel user) {
+		UserVO vo = new UserVO();
+		vo.setName(user.getName());
+		vo.setAge(user.getAge());
+		vo.setGender(user.getGenderBy());
+		vo.setBirthday(user.getBirthday());
+		vo.setAddress(user.getAddress());
+		return vo;
 	}
 }

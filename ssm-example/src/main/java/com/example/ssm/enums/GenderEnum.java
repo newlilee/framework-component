@@ -1,11 +1,11 @@
-package com.example.ssm.model;
+package com.example.ssm.enums;
 
 /**
- * gender
+ * gender enum
  *
  * @author clx
  */
-public enum Gender {
+public enum GenderEnum {
 	/**
 	 * male
 	 */
@@ -17,7 +17,7 @@ public enum Gender {
 
 	final int gender;
 
-	Gender(int gender) {
+	GenderEnum(int gender) {
 		this.gender = gender;
 	}
 
@@ -25,8 +25,8 @@ public enum Gender {
 		return gender;
 	}
 
-	public static Gender valueOf(int gender) {
-		for (Gender pGender : Gender.values()) {
+	public static GenderEnum valueOf(int gender) {
+		for (GenderEnum pGender : GenderEnum.values()) {
 			if (pGender.getGender() == gender) {
 				return pGender;
 			}
