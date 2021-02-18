@@ -27,7 +27,7 @@ hs_err_pid*
 .idea
 /target
 
-*.iml
+base-example.iml
 
 logs/
 logsBackup/
