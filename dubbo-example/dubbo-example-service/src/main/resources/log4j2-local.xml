@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <Property name="format">%d{yyyy-MM-dd HH:mm:ss SSS} %p - %msg%n</Property>
+        <Property name="filePath">/Users/clx/logs/</Property>
+        <Property name="backupFilePath">/Users/clx/logs/logsBackup/</Property>
+        <Property name="filePattern">%d{yyyy-MM-dd}.gz</Property>
+        <Property name="isAdditivity">false</Property>
+    </Properties>
+    <Appenders>
+        <Console name="STDOUT">
+            <PatternLayout pattern="${format}"/>
+        </Console>
+        <RollingFile name="console" fileName="${filePath}console.log"
+                     filePattern="${backupFilePath}console${filePattern}" immediateFlush="false">
+            <PatternLayout pattern="${format}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="debug" fileName="${filePath}debug.log" filePattern="${backupFilePath}debug${filePattern}"
+                     immediateFlush="false">
+            <PatternLayout pattern="${format}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="info" fileName="${filePath}info.log" filePattern="${backupFilePath}info${filePattern}"
+                     immediateFlush="false">
+            <PatternLayout pattern="${format}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="error" fileName="${filePath}error.log" filePattern="${backupFilePath}error${filePattern}"
+                     immediateFlush="false">
+            <PatternLayout pattern="${format}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <AsyncLogger name="console" level="info" additivity="${isAdditivity}" includeLocation="true">
+            <AppenderRef ref="console"/>
+        </AsyncLogger>
+        <AsyncLogger name="debug" level="debug" additivity="${isAdditivity}" includeLocation="true">
+            <AppenderRef ref="debug"/>
+        </AsyncLogger>
+        <AsyncLogger name="info" level="info" additivity="${isAdditivity}" includeLocation="true">
+            <AppenderRef ref="info"/>
+        </AsyncLogger>
+        <AsyncLogger name="error" level="error" additivity="${isAdditivity}" includeLocation="true">
+            <AppenderRef ref="error"/>
+        </AsyncLogger>
+        <Root level="INFO">
+            <AppenderRef ref="console"/>
+        </Root>
+    </Loggers>
+</Configuration>
