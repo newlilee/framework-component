@@ -2,8 +2,8 @@
 <Configuration>
     <Properties>
         <Property name="format">%d{yyyy-MM-dd HH:mm:ss SSS} %p - %msg%n</Property>
-        <Property name="filePath">/Users/didi/logs/</Property>
-        <Property name="backupFilePath">/Users/didi/logs/logsBackup/</Property>
+        <Property name="filePath">/Users/clx/logs/</Property>
+        <Property name="backupFilePath">/Users/clx/logs/logsBackup/</Property>
         <Property name="filePattern">%d{yyyy-MM-dd}.gz</Property>
         <Property name="isAdditivity">false</Property>
     </Properties>
