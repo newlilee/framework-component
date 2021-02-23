@@ -19,8 +19,23 @@
         <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
         <drools.version>7.49.0.Final</drools.version>
     </properties>
+
     <modules>
         <module>dubbo-example-api</module>
         <module>dubbo-example-service</module>
     </modules>
+
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <id>nexus</id>
+            <name>nexus-central</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+        </repository>
+    </repositories>
 </project>
