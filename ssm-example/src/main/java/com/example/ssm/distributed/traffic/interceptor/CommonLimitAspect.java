@@ -17,7 +17,7 @@ import org.springframework.stereotype.Component;
 @EnableAspectJAutoProxy(proxyTargetClass = true)
 public class CommonLimitAspect {
 
-	private RedisLimit redisLimit;
+	private final RedisLimit redisLimit;
 
 	@Autowired
 	public CommonLimitAspect(RedisLimit redisLimit) {

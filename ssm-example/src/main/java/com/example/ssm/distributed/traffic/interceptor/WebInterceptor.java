@@ -5,9 +5,9 @@ import com.example.ssm.distributed.traffic.core.RedisLimit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 public class WebInterceptor implements WebMvcConfigurer {
 
-	private RedisLimit redisLimit;
+	private final RedisLimit redisLimit;
 
 	@Autowired
 	public WebInterceptor(RedisLimit redisLimit) {
@@ -30,7 +30,7 @@ public class WebInterceptor implements WebMvcConfigurer {
 		registry.addInterceptor(new WebLimitInterceptor()).addPathPatterns("/**");
 	}
 
-	private class WebLimitInterceptor extends HandlerInterceptorAdapter {
+	private class WebLimitInterceptor implements HandlerInterceptor {
 		@Override
 		public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 			if (redisLimit == null) {

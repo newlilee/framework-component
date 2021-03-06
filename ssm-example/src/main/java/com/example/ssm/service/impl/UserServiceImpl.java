@@ -5,9 +5,8 @@ import com.example.ssm.model.UserModel;
 import com.example.ssm.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.annotation.Resource;
 
 /**
  * @author clx 2018/9/15
@@ -17,8 +16,12 @@ public class UserServiceImpl implements UserService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserServiceImpl.class);
 
-	@Resource
-	private UserDao userDao;
+	private final UserDao userDao;
+
+	@Autowired
+	public UserServiceImpl(UserDao userDao) {
+		this.userDao = userDao;
+	}
 
 	@Override
 	public void addUser(UserModel user) {
