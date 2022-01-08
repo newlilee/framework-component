@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: spring-boot-example
+  cloud:
+    consul:
+      config:
+        enabled: false
+        watch:
+          enabled: false
+          delay: 10000
+        fail-fast: false
+        format: yaml
+        prefix: config
+        name: ${spring.application.name}
+        data-key: data
+      discovery:
+        enabled: false
+        register: false
+      host: 127.0.0.1
+      port: 8500
+    profiles:
+      active: local
