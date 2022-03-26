@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <Property name="format">%d{yyyy-MM-dd HH:mm:ss SSS} %p - %msg%n</Property>
+        <Property name="filePath">/Users/clx/logs/</Property>
+        <Property name="backupFilePath">/Users/clx/logs/logsBackup/</Property>
+        <Property name="filePattern">%d{yyyy-MM-dd}.gz</Property>
+        <Property name="isAdditivity">false</Property>
+    </Properties>
+    <Appenders>
+        <Console name="STDOUT" target="SYSTEM_OUT">
+            <PatternLayout pattern="${format}"/>
+        </Console>
+        <RollingFile name="console_appender" fileName="${filePath}console.log"
+                     filePattern="${backupFilePath}console${filePattern}" immediateFlush="false">
+            <PatternLayout pattern="${format}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="debug_appender" fileName="${filePath}debug.log" filePattern="${backupFilePath}debug${filePattern}"
+                     immediateFlush="false">
+            <PatternLayout pattern="${format}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="info_appender" fileName="${filePath}info.log" filePattern="${backupFilePath}info${filePattern}"
+                     immediateFlush="false">
+            <PatternLayout pattern="${format}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+        <RollingFile name="error_appender" fileName="${filePath}error.log" filePattern="${backupFilePath}error${filePattern}"
+                     immediateFlush="false">
+            <PatternLayout pattern="${format}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+    </Appenders>
+    <Loggers>
+        <AsyncLogger name="console" level="INFO" additivity="${isAdditivity}" includeLocation="true">
+            <AppenderRef ref="console_appender"/>
+        </AsyncLogger>
+        <AsyncLogger name="debug" level="DEBUG" additivity="${isAdditivity}" includeLocation="true">
+            <AppenderRef ref="debug_appender"/>
+        </AsyncLogger>
+        <AsyncLogger name="info" level="INFO" additivity="${isAdditivity}" includeLocation="true">
+            <AppenderRef ref="info_appender"/>
+        </AsyncLogger>
+        <AsyncLogger name="error" level="ERROR" additivity="${isAdditivity}" includeLocation="true">
+            <AppenderRef ref="error_appender"/>
+        </AsyncLogger>
+        <Root level="INFO">
+            <AppenderRef ref="STDOUT"/>
+            <AppenderRef level="ALL" ref="console_appender"/>
+            <AppenderRef level="INFO" ref="info_appender"/>
+            <AppenderRef level="ERROR" ref="error_appender"/>
+        </Root>
+    </Loggers>
+</Configuration>

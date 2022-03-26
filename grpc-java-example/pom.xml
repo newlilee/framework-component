@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.example.grpc</groupId>
+    <artifactId>grpc-java-example</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <spring.boot.version>2.6.3</spring.boot.version>
+        <guava.version>31.0.1-jre</guava.version>
+        <commons.lang3.version>3.12.0</commons.lang3.version>
+        <commons.collections4.version>4.4</commons.collections4.version>
+        <gson.version>2.9.0</gson.version>
+        <junit.version>5.8.2</junit.version>
+        <jedis.version>3.3.0</jedis.version>
+        <maven.source.plugin.version>3.2.1</maven.source.plugin.version>
+        <drools.version>7.49.0.Final</drools.version>
+        <lombok.version>1.18.22</lombok.version>
+        <grpc.version>1.44.1</grpc.version>
+    </properties>
+
+    <modules>
+        <module>grpc-example-api</module>
+        <module>grpc-example-service</module>
+    </modules>
+
+    <repositories>
+        <repository>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <id>nexus</id>
+            <name>nexus-central</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </repository>
+    </repositories>
+</project>
