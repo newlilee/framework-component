@@ -13,10 +13,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableCaching
 @EnableScheduling
 @SpringBootApplication
-public class SpringBootExampleApplication {
-    public static void main(String[] args) {
-        SpringApplication.run(SpringBootExampleApplication.class, args);
-    }
+public class Application {
+	public static void main(String[] args) {
+		SpringApplication.run(Application.class, args);
+	}
 }
 
 
